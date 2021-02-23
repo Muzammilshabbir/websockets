@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+   <head>
+
+	<style> 
+div {
+  width: 100px;
+  height: 100px;
+  background-color: red;
+  animation-name: example;
+  animation-duration: 4s;
+}
+
+@keyframes example {
+  from {background-color: red;}
+  to {background-color: yellow;}
+}
+</style>
+      <title>Socket.io Demo</title>
+      <meta charset="utf-8">
+		<link rel="stylesheet" href="styles.css">
+   </head>
+   <body>
+		 <h1>Web Socket</h1>	 
+		 <p id="buttonCount"></p>
+		 <p id="buttonCount2"></p>
+		 <button onclick="buttonClicked()">Click me</button>
+		 <button onclick="buttonClicked2()">Button 2</button>
+
+		 <script src="/socket.io/socket.io.js"></script>
+		 <script>
+			 var socket = io.connect();
+			 var socket2 = io.connect();
+			 
+			 function buttonClicked(){
+			   socket.emit('clicked');
+			 }
+			 
+			 function buttonClicked2(){
+			   socket2.emit('clicked');
+			 }
+			 //when we receive numClients, do this
+			 
+			 socket.on('buttonUpdate', function(){
+
+				 document.getElementById("buttonCount").innerHTML = '<div></div><p><b>Note:</b> When an animation is finished, it changes back to its original style.</p>';				
+				 
+			 });
+			 socket2.on('buttonUpdate', function(){
+
+				
+				document.getElementById("buttonCount2").innerHTML = '<div>This one is for button 2</div>';
+
+				});
+		</script>
+   </body>
+</html>
